@@ -1,0 +1,69 @@
+# ************************* FINAL BFV *************************
+from Pyfhel import Pyfhel
+
+HE = Pyfhel()
+HE.contextGen(scheme='BFV', n = 4096, t_bits = 20)
+HE.keyGen()
+
+
+a, b = 2, 3
+a_enc, b_enc = HE.encrypt(a), HE.encrypt(b)
+c_enc = a_enc + b_enc
+
+print(HE.decrypt(c_enc)[0])
+# ************************* FINAL BFV *************************
+# ************************* FINAL CKKS *************************
+from Pyfhel import Pyfhel
+
+HE = Pyfhel(
+    context_params = {'scheme': 'CKKS',
+                      'n': 16384,
+                      'qi_sizes': [30, 30, 30, 30, 30],
+                      'scale': 2**30},
+    key_gen = True,
+)
+
+
+a, b = 4.6, 5.4
+a_enc, b_enc = HE.encrypt(a), HE.encrypt(b)
+
+c_enc = a_enc + b_enc
+print("10.0", HE.decrypt(c_enc)[0])
+c_enc = a_enc - b_enc
+print("-0.8", HE.decrypt(c_enc)[0])
+c_enc = a_enc * b_enc
+print("24.84", HE.decrypt(c_enc)[0])
+# ************************* FINAL CKKS *************************
+
+# ************************* FINAL BGV *************************
+from Pyfhel import Pyfhel
+
+HE = Pyfhel()
+HE.contextGen(scheme='BGV', n = 4096, t_bits = 20)
+HE.keyGen()
+
+
+a, b = 2, 3
+a_enc, b_enc = HE.encrypt(a), HE.encrypt(b)
+c_enc = a_enc + b_enc
+
+print(HE.decrypt(c_enc)[0])
+# ************************* FINAL BGV *************************
+
+# ************************* text decoration *************************
+print("\033[1mBoldText\033[0m")
+print("\033[3mItalicText\033[0m")
+print("\033[1;3mBold&Italic\033[0m")
+# ************************* text decoration *************************
+
+# ************************* loading code *************************
+from tqdm import tqdm
+import time
+
+def loading():
+    print()
+    time.sleep(1)
+    for i in tqdm(range(int(100))):
+        time.sleep(0.01)  
+    print()
+# ************************* loading code *************************
